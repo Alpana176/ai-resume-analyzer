@@ -1,5 +1,13 @@
 # 📄 AI Resume Analyzer
 
+## 🖼️ Preview
+
+![AI Resume Analyzer Screenshot](./assets/demo-screenshot.png)
+
+
+## 🚀 Live Demo
+
+👉 [Try it live](https://ai-resume-analyzer-gsnnqhtxhzjteet4ufredk.streamlit.app/)
 ## 🎯 What it does
 
 Upload your resume PDF and enter a target job role — the system analyzes your resume using semantic retrieval and Gemini AI, then returns:
