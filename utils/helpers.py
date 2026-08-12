@@ -1,31 +1,102 @@
 import json
 import os
 
+
 def save_to_json(new_data):
-    # Get project root folder
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    # Create path: project_root/data/resume_data.json
-    filename = os.path.join(BASE_DIR, "data", "resume_data.json")
+    # ---------------------------------------------------------
+    # Project root
+    # ---------------------------------------------------------
 
-    # Create folder if not exists
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    base_dir = os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
 
-    # Load old data
+
+    # ---------------------------------------------------------
+    # Data directory
+    # ---------------------------------------------------------
+
+    data_dir = os.path.join(
+        base_dir,
+        "data"
+    )
+
+    os.makedirs(
+        data_dir,
+        exist_ok=True
+    )
+
+
+    filename = os.path.join(
+        data_dir,
+        "resume_data.json"
+    )
+
+
+    # ---------------------------------------------------------
+    # Load existing data
+    # ---------------------------------------------------------
+
+    data = []
+
     if os.path.exists(filename):
-        with open(filename, "r") as f:
-            try:
-                data = json.load(f)
-            except json.JSONDecodeError:
-                data = []
-    else:
-        data = []
 
-    # Add new data
-    data.append(new_data)
+        try:
 
-    # Save file
-    with open(filename, "w") as f:
-        json.dump(data, f, indent=4)
+            with open(
+                filename,
+                "r",
+                encoding="utf-8"
+            ) as f:
 
-    print("✅ Data saved at:", filename)
+                existing_data = json.load(f)
+
+                if isinstance(
+                    existing_data,
+                    list
+                ):
+
+                    data = existing_data
+
+        except (
+            json.JSONDecodeError,
+            OSError
+        ):
+
+            data = []
+
+
+    # ---------------------------------------------------------
+    # Append new result
+    # ---------------------------------------------------------
+
+    data.append(
+        new_data
+    )
+
+
+    # ---------------------------------------------------------
+    # Save
+    # ---------------------------------------------------------
+
+    with open(
+        filename,
+        "w",
+        encoding="utf-8"
+    ) as f:
+
+        json.dump(
+            data,
+            f,
+            indent=4,
+            ensure_ascii=False
+        )
+
+
+    print(
+        "✅ Analysis saved at:",
+        filename
+    )
